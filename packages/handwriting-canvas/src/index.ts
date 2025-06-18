@@ -78,15 +78,32 @@ export class HandwritingCanvas extends HTMLElement {
 
     const { previous, coords, points } = this.drawingPointers.get(e.pointerId)!;
 
+    let previousX = previous[0];
+    let previousY = previous[1];
+
     this.context2d?.beginPath();
-    this.context2d?.moveTo(previous[0] + coords[0], previous[1] + coords[1]);
-    this.context2d?.lineTo(e.clientX + coords[0], e.clientY + coords[1]);
+    const events = 'getCoalescedEvents' in e ? e.getCoalescedEvents() : [e];
+
+    let nextPoints = points;
+
+    events.forEach((event) => {
+      this.context2d?.moveTo(previousX + coords[0], previousY + coords[1]);
+      this.context2d?.lineTo(
+        event.clientX + coords[0],
+        event.clientY + coords[1]
+      );
+
+      previousX = event.clientX;
+      previousY = event.clientY;
+      nextPoints = nextPoints.concat([e.clientX, e.clientY]);
+    });
+
     this.context2d?.stroke();
 
     this.drawingPointers.set(e.pointerId, {
-      previous: [e.clientX, e.clientY],
+      previous: [previousX, previousY],
       coords,
-      points: points.concat([e.clientX, e.clientY]),
+      points: nextPoints,
     });
   }
 
