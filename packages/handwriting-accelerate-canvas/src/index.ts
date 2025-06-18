@@ -1,9 +1,18 @@
-export const packageName = 'handwriting-accelerate-canvas';
-
-export class HandwritingAccelerateCanvas {
-  _canvas: HTMLCanvasElement;
+export class HandwritingAccelerateCanvas extends HTMLElement {
+  private canvas: HTMLCanvasElement;
 
   constructor() {
-    this._canvas = document.createElement('canvas');
+    super();
+
+    const shadow = this.attachShadow({ mode: 'open' });
+
+    this.canvas = document.createElement('canvas');
+
+    shadow.appendChild(this.canvas);
   }
 }
+
+customElements.define(
+  'handwriting-accelerate-canvas',
+  HandwritingAccelerateCanvas
+);
