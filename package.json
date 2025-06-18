@@ -1,8 +1,8 @@
 {
-  "name": "handwriting-accelerate-canvas",
+  "name": "handwriting-canvas",
   "private": true,
   "scripts": {
-    "build": "pnpm -F handwriting-accelerate-canvas build",
+    "build": "pnpm -F handwriting-canvas build",
     "example:basic": "pnpm -F basic dev"
   }
 }

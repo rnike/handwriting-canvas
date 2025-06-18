@@ -1,4 +1,4 @@
-export class HandwritingAccelerateCanvas extends HTMLElement {
+export class HandwritingCanvas extends HTMLElement {
   private canvas: HTMLCanvasElement;
   private context2d: CanvasRenderingContext2D | null;
 
@@ -115,7 +115,4 @@ export class HandwritingAccelerateCanvas extends HTMLElement {
   }
 }
 
-customElements.define(
-  'handwriting-accelerate-canvas',
-  HandwritingAccelerateCanvas
-);
+customElements.define('handwriting-canvas', HandwritingCanvas);

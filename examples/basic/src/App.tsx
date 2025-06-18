@@ -7,13 +7,13 @@ import {
 } from 'react';
 import './App.css';
 
-import 'handwriting-accelerate-canvas';
+import 'handwriting-canvas';
 
 declare module 'react' {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      'handwriting-accelerate-canvas': React.DetailedHTMLProps<
+      'handwriting-canvas': React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement>,
         HTMLElement
       > & {
@@ -73,12 +73,12 @@ function App() {
         flexDirection: 'column',
       }}
     >
-      <handwriting-accelerate-canvas
+      <handwriting-canvas
         // @ts-expect-error todo: type
         ref={ref}
         width={width}
         height={height}
-        resolution={3}
+        resolution={devicePixelRatio}
         className="rounded border"
         style={{
           width: width,

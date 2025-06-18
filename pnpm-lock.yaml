@@ -10,9 +10,9 @@ importers:
 
   examples/basic:
     dependencies:
-      handwriting-accelerate-canvas:
+      handwriting-canvas:
         specifier: workspace:^
-        version: link:../../packages/handwriting-accelerate-canvas
+        version: link:../../packages/handwriting-canvas
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -54,7 +54,7 @@ importers:
         specifier: ^6.3.5
         version: 6.3.5
 
-  packages/handwriting-accelerate-canvas:
+  packages/handwriting-canvas:
     devDependencies:
       typescript:
         specifier: ^5.8.3
