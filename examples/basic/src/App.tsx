@@ -1,3 +1,10 @@
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type PointerEventHandler,
+} from 'react';
 import './App.css';
 
 import 'handwriting-accelerate-canvas';
@@ -9,17 +16,81 @@ declare module 'react' {
       'handwriting-accelerate-canvas': React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement>,
         HTMLElement
-      >;
+      > & {
+        width?: number;
+        height?: number;
+        resolution?: number;
+      };
     }
   }
 }
 
 function App() {
+  const ref = useRef<{
+    drawStart: (e: PointerEvent) => void;
+    drawMove: (e: PointerEvent) => void;
+    drawEnd: (e: PointerEvent) => void;
+  }>(null);
+
+  const handlePointerDown = useCallback<PointerEventHandler<HTMLElement>>(
+    (e) => {
+      ref.current?.drawStart(e.nativeEvent);
+    },
+    []
+  );
+
+  const handlePointerMove = useCallback<PointerEventHandler<HTMLElement>>(
+    (e) => {
+      ref.current?.drawMove(e.nativeEvent);
+    },
+    []
+  );
+
+  const handlePointerUp = useCallback<PointerEventHandler<HTMLElement>>((e) => {
+    console.log(ref.current?.drawEnd(e.nativeEvent));
+  }, []);
+
+  const [[width, height], setSize] = useState(() => [0, 0]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize([window.innerWidth, window.innerHeight]);
+    };
+
+    setSize([window.innerWidth, window.innerHeight]);
+
+    document.addEventListener('resize', handleResize);
+
+    return () => {
+      document.addEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <>
-      <h1>Handwriting Accelerate Canvas</h1>
-      <handwriting-accelerate-canvas />
-    </>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <handwriting-accelerate-canvas
+        // @ts-expect-error todo: type
+        ref={ref}
+        width={width}
+        height={height}
+        resolution={3}
+        className="rounded border"
+        style={{
+          width: width,
+          height: height,
+          backgroundColor: '#f9f9f9',
+        }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+      />
+    </div>
   );
 }
 
