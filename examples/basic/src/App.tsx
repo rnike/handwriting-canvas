@@ -78,7 +78,7 @@ function App() {
         ref={ref}
         width={width}
         height={height}
-        resolution={devicePixelRatio}
+        resolution={devicePixelRatio * 4}
         className="rounded border"
         style={{
           width: width,
