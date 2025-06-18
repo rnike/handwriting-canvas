@@ -95,7 +95,7 @@ export class HandwritingCanvas extends HTMLElement {
 
       previousX = event.clientX;
       previousY = event.clientY;
-      nextPoints = nextPoints.concat([e.clientX, e.clientY]);
+      nextPoints = nextPoints.concat([event.clientX, event.clientY]);
     });
 
     this.context2d?.stroke();
